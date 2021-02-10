@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,21 +16,20 @@ namespace Samurai
         private bool hasHorse;
         private bool hasArmor;
         private string type;
-        private double stamina;
+        private double stamina; // stamina was NOT properly epxlained. There was no official way on how it was supposed to work, so i firstly decided to avoid it. i ended up implementing something of my own and having much fun!
         private double life;
 
-        //getters
+        //getters:
 
         public string GetName() { return name; }
         public string GetWeapontype() { return weapontype; }
         public bool GetDoubleweapon() { return doubleweapon; }
         public bool GetHashorse() { return hasHorse; }
         public bool GetHasArmor() { return hasArmor; }
-        public string GetType() { return type; }
         public double Getstamina() { return stamina; }
         public double GetLife() { return life; }
 
-        //setters
+        //setters:
 
         public void SetName(string name) { this.name = name; }
         public void SetWeapontype(string weapontype) { this.weapontype = weapontype; }
@@ -48,13 +47,13 @@ namespace Samurai
             this.stamina = 100;
         }
 
-        //Abilities
+        //Abilities:
 
-        //checks the weapon of the attacker 
-        //and prints the corresponding weapon and adjective
+        //checks the weapon of the attacker.
+        //and prints the corresponding weapon and adjective.
         public string WeaponMessage(string weapon)
         {
-            string message="";
+            string message = "";
 
             if (weapon == "Katana")
                 message = "magnificent katana";
@@ -68,16 +67,16 @@ namespace Samurai
             return message;
         }
 
-        //order one fighter to attack another
+        //order one fighter to attack another.
         public void Attack(Samurai victim)
         {
             if (life == 0)
             {
-                Console.WriteLine("{0} is dead and cannot attack.",name);
+                Console.WriteLine("{0} is dead and cannot attack.", name);
             }
             else
             {
-                //victim's defense points
+                //victim's defense points.
                 int shield = 0;
 
                 if ((victim.hasArmor == true) & (victim.hasHorse == true))
@@ -92,8 +91,8 @@ namespace Samurai
                 {
                     shield = 5;
                 }
- 
-                //attacker's damage points
+
+                //attacker's damage points.
                 double weaponpower = 0;
 
                 if (weapontype == "Katana" & doubleweapon == false) { weaponpower = 10; }
@@ -113,7 +112,7 @@ namespace Samurai
                 else if (weapontype == "Wakizashi" & doubleweapon == true) { weaponpower = 5 * 1.8; }
 
 
-                //fighter type attack calculation
+                //fighter type attack calculation.
                 if (type == "Soldier")
                 {
                     if (victim.GetLife() > 0)
@@ -138,17 +137,17 @@ namespace Samurai
                         victim.CheckState();
                         //dealtdmg = stamina/3 + 5 + (stamina/4);
                     }
-                
-                else if (victim.GetLife() <= 0)
-                {
-                    Console.WriteLine("{0} hurt the soulless body of {1}..", name, victim.GetName());
-                }
+
+                    else if (victim.GetLife() <= 0)
+                    {
+                        Console.WriteLine("{0} hurt the soulless body of {1}..", name, victim.GetName());
+                    }
 
                 }
 
-                //stamina falling due to attacking
+                //stamina falling due to attacking.
                 if (stamina >= 20)
-                stamina -= 20;
+                    stamina -= 20;
                 else
                 {
                     stamina = 0;
@@ -156,15 +155,15 @@ namespace Samurai
             }
         }
 
-        //use it on a fighter to add 15 HP
+        //use it on a fighter to add 15 HP. something not required. i made it for fun.
         public void Bandage()
         {
 
 
             if ((GetLife() <= 85) & (GetLife() != 0))
             {
-                Console.WriteLine("{0} applied a Bandage on a wound and recovered {1} HP!", name, (100 - life).ToString("#.##"));
-                SetLife(GetLife()+15);
+                Console.WriteLine("{0} applied a Bandage on a wound and recovered 15 HP!", name);
+                SetLife(GetLife() + 15);
                 CheckState();
             }
 
@@ -180,13 +179,13 @@ namespace Samurai
 
         }
 
-        //use it on a fighter to fully heal
+        //use it on a fighter to fully heal. something not required. i made it for fun.
         public void Medkit()
         {
 
             if ((GetLife() != 100) & (GetLife() != 0))
             {
-                Console.WriteLine("{0} applied a Medkit on a wound and recovered {1} HP!", name, (100-life).ToString("#.##"));
+                Console.WriteLine("{0} applied a Medkit on a wound and recovered {1} HP!", name, (100 - life).ToString("#.##"));
                 SetLife(100);
                 CheckState();
             }
@@ -196,13 +195,13 @@ namespace Samurai
                 Console.WriteLine("{0} tried to apply a Medkit but didn't make it..", name);
             }
 
-            else if(GetLife() == 0)
+            else if (GetLife() == 0)
             {
                 Console.WriteLine("A dead fighter cannot be healed");
             }
         }
 
-        //the fighter rests and fully recovers stamina
+        //the fighter rests and fully recovers stamina. something not required. i made it for fun.
         public void Rest()
         {
             if (life == 0)
@@ -224,13 +223,13 @@ namespace Samurai
             }
         }
 
-        //print a fighter's health if alive, or death message if dead
+        //print a fighter's health if alive, or death message if dead.
         public void CheckState()
         {
             if (life <= 0)
             {
                 life = 0;
-                Console.WriteLine("{0} died..", name);               
+                Console.WriteLine("{0} died..", name);
             }
             else
             {
@@ -239,10 +238,10 @@ namespace Samurai
         }
 
         //print a fighter's full stats
-        public void Print()
+        public void PrintStats()
         {
             Console.WriteLine("--------------------------------");
-            Console.WriteLine("Stats of {0}:",name);
+            Console.WriteLine("Stats of {0}:", name);
             Console.WriteLine("Weapon Type: {0}", weapontype);
             Console.WriteLine("Double weapon: {0}", doubleweapon);
             Console.WriteLine("Armor: {0}", hasArmor);
@@ -258,7 +257,7 @@ namespace Samurai
     class SamuraiMain
     {
 
-        static void Main(string[] args)
+        static void Main()
         {
 
             //Creation of Akechi Mitsuhide
@@ -269,7 +268,7 @@ namespace Samurai
             Akechi.SetWeapontype("Katana");
             Akechi.SetDoubleWeapon(true);
             Akechi.SetLife(100);
-            Akechi.Print();
+            Akechi.PrintStats();
 
 
             //Creation of Date Masamune
@@ -280,7 +279,7 @@ namespace Samurai
             Date.SetWeapontype("Yumi");
             Date.SetDoubleWeapon(false);
             Date.SetLife(35);
-            Date.Print();
+            Date.PrintStats();
 
             //Creation of Hattori Hanzo
             Samurai Hattori = new Samurai("Hattori Hanzo");
@@ -290,7 +289,7 @@ namespace Samurai
             Hattori.SetWeapontype("Naginata");
             Hattori.SetDoubleWeapon(false);
             Hattori.SetLife(100);
-            Hattori.Print();
+            Hattori.PrintStats();
 
             //Creation of Oda Nobunaga
             Samurai Oda = new Samurai("Oda Nobunaga");
@@ -300,7 +299,7 @@ namespace Samurai
             Oda.SetWeapontype("Wakizashi");
             Oda.SetDoubleWeapon(true);
             Oda.SetLife(100);
-            Oda.Print();
+            Oda.PrintStats();
 
             //Creation of Takeda Nobunaga
             Samurai Takeda = new Samurai("Takeda Nobunaga");
@@ -310,9 +309,9 @@ namespace Samurai
             Takeda.SetWeapontype("Katana");
             Takeda.SetDoubleWeapon(true);
             Takeda.SetLife(100);
-            Takeda.Print();
+            Takeda.PrintStats();
 
-            //Creation of Mitsako Shinozaki
+            //Creation of Mitsako Shinozaki. a ghost in the RAM. a soldier that doesnt exist in the homework's needs.
             Samurai Mitsako = new Samurai("Mitsako Shinozaki");
             Mitsako.SetType("Ronin");
             Mitsako.SetHasArmor(false);
@@ -320,7 +319,6 @@ namespace Samurai
             Mitsako.SetWeapontype("Katana");
             Mitsako.SetDoubleWeapon(true);
             Mitsako.SetLife(100);
-            Mitsako.Print();
 
             //FIGHT BEGINS!
 
@@ -332,39 +330,41 @@ namespace Samurai
 
             //Thread.Sleep(n); not the best delay option but.. it works..
 
-            //Step 6: Takeda attacks Akechi and Date
+            //Step 6: Takeda attacks Akechi and Date.
             Thread.Sleep(2500);
             Takeda.Attack(Akechi);
             Thread.Sleep(1000);
             Takeda.Attack(Date);
 
             Thread.Sleep(2500);
-            //Step 7: Oda attacks Hattori
+            //Step 7: Oda attacks Hattori.
             Oda.Attack(Hattori);
 
             Thread.Sleep(2500);
-            //Step 8: Hattori counterattacks Oda
+            //Step 8: Hattori counterattacks Oda.
             Hattori.Attack(Oda);
 
             Thread.Sleep(2500);
-            //Step 9: Date fires an arrow against Takeda
+            //Step 9: Date fires an arrow against Takeda.
             Date.Attack(Takeda);
 
             Thread.Sleep(2500);
-            //Step 10: Akechi attacks Takeda
+            //Step 10: Akechi attacks Takeda.
             Akechi.Attack(Takeda);
 
             Thread.Sleep(2500);
-            //Step 11: Takeda supports his brother so attacks Hattori twice
+            //Step 11: Takeda supports his brother so attacks Hattori twice.
             Takeda.Attack(Hattori);
             Takeda.Attack(Hattori);
 
             Thread.Sleep(2500);
-            //Oda attacks Akechi
+            //Oda attacks Akechi.
             Oda.Attack(Akechi);
 
+            Thread.Sleep(1000);
+            Console.WriteLine();
+            Console.WriteLine("---===The fight is over===---");
             Console.ReadLine();
         }
-    } 
+    }
 }
- 
